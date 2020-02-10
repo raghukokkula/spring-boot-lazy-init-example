@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: spring-boot-example
+  name: spring-boot-example-green
 spec:
   replicas: 3
   template:
@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
         - name: spring-boot-example
-          image: 'gcr.io/raghu-vamsha-project/spring-boot-example:version1'
+          image: 'gcr.io/raghu-vamsha-project/spring-boot-example:version2'
           ports:
             - containerPort: 8080
 
