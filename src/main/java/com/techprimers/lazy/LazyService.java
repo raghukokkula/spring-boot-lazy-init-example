@@ -11,6 +11,6 @@ public class LazyService {
     }
 
     public String hello() {
-        return "Hello Manu - version 3";
+        return "Hello Manu - version 1";
     }
 }
