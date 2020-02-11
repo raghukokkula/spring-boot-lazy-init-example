@@ -32,4 +32,5 @@ spec:
       protocol: TCP
   selector:
     app: spring-boot-example
+    version: "v2"
   type: LoadBalancer
