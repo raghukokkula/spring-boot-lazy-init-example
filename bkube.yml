@@ -1,18 +1,18 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: spring-boot-example
+  name: spring-boot-example-green
 spec:
   replicas: 3
   template:
     metadata:
       labels:
         app: spring-boot-example
-        version: "v1"
+        version: "v2"
     spec:
       containers:
         - name: spring-boot-example
-          image: 'gcr.io/raghu-vamsha-project/spring-boot-example:version1'
+          image: 'gcr.io/raghu-vamsha-project/spring-boot-example:version2'
           ports:
             - containerPort: 8080
 
@@ -24,7 +24,7 @@ metadata:
   name: spring-boot-example-blue
   labels:
     name: spring-boot-example-blue
-    version: "v1"
+    version: "v2"
 spec:
   ports:
     - port: 8080
@@ -32,5 +32,5 @@ spec:
       protocol: TCP
   selector:
     app: spring-boot-example
-    version: "v1"
+    version: "v2"
   type: LoadBalancer
