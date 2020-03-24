@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: example
+spec:
+  replicas: 3
+  selector:
+    app: example
+  template:
+    metadata:
+      name: example
+      labels:
+        app: example
+    spec:
+      containers:
+      - name: example
+        image: example/rc
+        ports:
+        - containerPort: 80
+        
+---
+
+apiVersion: extensions/v1beta1
+ kind: ReplicaSet
+ metadata:
+   name: example
+ spec:
+   replicas: 3
+   selector:
+     matchLabels:
+       app: example
+   template:
+     metadata:
+       labels:
+         app: example
+         environment: dev
+     spec:
+       containers:
+       - name: example
+         image: example/rs
+         ports:
+         - containerPort: 80
+         
+         
+         
+         
+Replica Set is the next generation of Replication Controller. Replication controller is kinda imperative, but replica sets try to be as declarative as possible.
+
+1.The main difference between a Replica Set and a Replication Controller right now is the selector support.
+
++--------------------------------------------------+-----------------------------------------------------+
+|                   Replica Set                    |               Replication Controller                |
++--------------------------------------------------+-----------------------------------------------------+
+| Replica Set supports the new set-based selector. | Replication Controller only supports equality-based |
+| This gives more flexibility. for eg:             | selector. for eg:                                   |
+|          environment in (production, qa)         |             environment = production                |
+|  This selects all resources with key equal to    | This selects all resources with key equal to        |
+|  environment and value equal to production or qa | environment and value equal to production           |
++--------------------------------------------------+-----------------------------------------------------+
+2.The second thing is the updating the pods.
+
++-------------------------------------------------------+-----------------------------------------------+
+|                      Replica Set                      |            Replication Controller             |
++-------------------------------------------------------+-----------------------------------------------+
+| rollout command is used for updating the replica set. | rolling-update command is used for updating   |
+| Even though replica set can be used independently,    | the replication controller. This replaces the |
+| it is best used along with deployments which          | specified replication controller with a new   |
+| makes them declarative.                               | replication controller by updating one pod    |
+|                                                       | at a time to use the new PodTemplate.         |
++-------------------------------------------------------+-----------------------------------------------+
+These are the two things that differentiates RS and RC. Deployments with RS is widely used as it is more declarative.
